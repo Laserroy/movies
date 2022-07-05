@@ -1,0 +1,18 @@
+{
+    "name": "lazerx/movies",
+    "description": "simple php crud app",
+    "autoload": {
+        "psr-4": {
+            "Lazerx\\Movies\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Pavel Cherkasov",
+            "email": "deectro@gmail.com"
+        }
+    ],
+    "require": {
+        "php": ">=8.1"
+    }
+}
