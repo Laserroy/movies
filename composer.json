@@ -3,7 +3,8 @@
     "description": "simple php crud app",
     "autoload": {
         "psr-4": {
-            "Lazerx\\Movies\\": "src/"
+            "App\\": "App/",
+            "Database\\": "Database/"
         }
     },
     "authors": [
@@ -13,6 +14,9 @@
         }
     ],
     "require": {
-        "php": ">=8.1"
+        "php": ">=8.1",
+        "vlucas/phpdotenv": "^5.4",
+        "jenssegers/blade": "^1.4",
+        "ext-pdo": "*"
     }
 }
