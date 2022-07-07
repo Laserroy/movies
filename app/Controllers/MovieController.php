@@ -2,7 +2,7 @@
 
 namespace App\Controllers;
 
-use Database\Database;
+use database\Database;
 use Jenssegers\Blade\Blade;
 
 class MovieController

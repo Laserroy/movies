@@ -3,8 +3,8 @@
     "description": "simple php crud app",
     "autoload": {
         "psr-4": {
-            "App\\": "App/",
-            "Database\\": "Database/"
+            "App\\": "app/",
+            "Database\\": "database/"
         }
     },
     "authors": [
