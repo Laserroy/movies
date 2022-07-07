@@ -17,6 +17,7 @@
         "php": ">=8.1",
         "vlucas/phpdotenv": "^5.4",
         "jenssegers/blade": "^1.4",
-        "ext-pdo": "*"
+        "ext-pdo": "*",
+        "klein/klein": "^2.1"
     }
 }
