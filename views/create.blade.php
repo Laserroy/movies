@@ -9,11 +9,11 @@
             <div class="row">
                 <div class="col-6 mb-3">
                     <label for="titleInput" class="form-label">Title</label>
-                    <input type="text" name="title" class="form-control" id="titleInput" required>
+                    <input type="text" name="title" class="form-control" id="titleInput" maxLength="80" required>
                 </div>
                 <div class="col-6 mb-3">
                     <label for="releaseYearInput" class="form-label">Release Year</label>
-                    <input type="number" name="release_year" class="form-control" id="releaseYearInput" required>
+                    <input type="number" name="release_year" class="form-control" id="releaseYearInput" max="9999" required>
                 </div>
                 <div class="col-12 mb-3">
                     <label for="formatSelect" class="form-label">Format</label>
@@ -24,8 +24,8 @@
                     </select>
                 </div>
                 <div class="col-12 mb-3">
-                    <label for="starsInput" class="form-label">Star</label>
-                    <input type="stars" name="stars" class="form-control" id="passwordInput">
+                    <label for="starsSelect" class="form-label">Stars</label>
+                    <select id="starsSelect" name="stars[]" class="form-control" id="passwordInput" multiple></select>
                 </div>
                 <div class="d-flex flex-row-reverse">
                     <button type="submit" class="btn btn-primary">Add</button>
@@ -33,4 +33,29 @@
             </div>
         </form>
     </div>
+@endsection
+
+@section('script')
+    <script>
+        $(document).ready(function() {
+            $('#starsSelect').select2({
+                ajax: {
+                    delay: 1000,
+                    selectionCssClass: ':all:',
+                    dataType: 'json',
+                    url: '/stars',
+                    processResults: function (data) {
+                        const stars = $.map(data, function (obj) {
+                            obj.text = obj.text || obj.full_name;
+                            return obj;
+                        });
+
+                        return {
+                            results: stars
+                        };
+                    }
+                }
+            });
+        });
+    </script>
 @endsection

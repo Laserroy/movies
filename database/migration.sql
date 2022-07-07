@@ -7,7 +7,7 @@ CREATE TABLE users (
 
 CREATE TABLE movies (
                         id bigint AUTO_INCREMENT PRIMARY KEY,
-                        title varchar(100) UNIQUE NOT NULL,
+                        title varchar(80) UNIQUE NOT NULL,
                         release_year int(4) NOT NULL,
                         format ENUM('VHS', 'DVD', 'Blu-Ray') NOT NULL
 );

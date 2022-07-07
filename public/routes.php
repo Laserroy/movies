@@ -25,5 +25,9 @@ $router->respond('DELETE', '/[i:id]', function ($request) {
     echo (new \App\Controllers\MovieController)->delete($request->id);
 });
 
+$router->respond('GET', '/stars', function ($request) {
+    echo (new \App\Controllers\StarController())->typeahead($request);
+});
+
 $router->dispatch();
 
