@@ -12,12 +12,15 @@
 <body style="height: 100%" class="p-5">
 <nav class="navbar navbar-expand-lg bg-light">
     <div class="container-fluid">
-        <a class="navbar-brand" href="/">Movies</a>
+        <a class="navbar-brand" href="#">{{$_SERVER['PHP_AUTH_USER']}}</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarText">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="/">Movies</a>
+                </li>
                 <li class="nav-item">
                     <a class="nav-link active" aria-current="page" href="/stars">Stars</a>
                 </li>

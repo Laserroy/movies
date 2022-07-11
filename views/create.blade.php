@@ -43,7 +43,7 @@
                     delay: 1000,
                     selectionCssClass: ':all:',
                     dataType: 'json',
-                    url: '/stars',
+                    url: '/stars/typeahead',
                     processResults: function (data) {
                         const stars = $.map(data, function (obj) {
                             obj.text = obj.text || obj.full_name;
