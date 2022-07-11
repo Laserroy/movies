@@ -14,7 +14,7 @@ CREATE TABLE movies (
 
 CREATE TABLE stars (
     id bigint PRIMARY KEY AUTO_INCREMENT,
-    full_name varchar(150) NOT NULL UNIQUE
+    full_name varchar(100) NOT NULL UNIQUE
 );
 
 CREATE TABLE movie_stars (
