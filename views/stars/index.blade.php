@@ -8,7 +8,14 @@
         <div class="col-12">
             <form action="/stars" method="POST">
                 <div class="input-group mb-3">
-                    <input name="full_name" type="text" maxlength="100" required class="form-control" placeholder="Full name" aria-label="Full name" aria-describedby="button-addon">
+                    <input name="full_name"
+                           type="text"
+                           maxlength="100"
+                           required
+                           class="form-control"
+                           placeholder="Full name"
+                           aria-label="Full name"
+                           aria-describedby="button-addon">
                     <button class="btn btn-primary" type="submit" id="button-addon">Add new star</button>
                 </div>
             </form>
