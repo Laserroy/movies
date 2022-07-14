@@ -10,12 +10,16 @@ CREATE TABLE movies (
                         title varchar(80) UNIQUE NOT NULL,
                         release_year int(4) NOT NULL,
                         format ENUM('VHS', 'DVD', 'Blu-Ray') NOT NULL
-);
+)
+CHARACTER SET utf8mb4
+COLLATE utf8mb4_unicode_ci;
 
 CREATE TABLE stars (
     id bigint PRIMARY KEY AUTO_INCREMENT,
     full_name varchar(100) NOT NULL UNIQUE
-);
+)
+CHARACTER SET utf8mb4
+COLLATE utf8mb4_unicode_ci;
 
 CREATE TABLE movie_stars (
     id bigint PRIMARY KEY AUTO_INCREMENT,
