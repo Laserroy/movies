@@ -13,10 +13,10 @@ class ImportController
         $this->db = new Database();
     }
 
-    public function importMovies($request)
+    public function importMovies()
     {
         try {
-            $files = $request->files();
+            $files = $_FILES;
             $content = file_get_contents($files['movies_import']['tmp_name']);
 
             $raw = explode("\n", $content);
@@ -32,7 +32,7 @@ class ImportController
                 $this->saveMovie($movieData);
             }
         } catch (\Exception $e) {
-            return $e->getMessage();
+            echo $e->getMessage();
         }
 
         header("Location: /");

@@ -3,47 +3,50 @@
 require __DIR__ . '/../vendor/autoload.php';
 require __DIR__ . '/../bootstrap.php';
 
-$router = new \Klein\Klein();
+$dispatcher = FastRoute\simpleDispatcher(function(FastRoute\RouteCollector $r) {
 
-$router->respond('GET', '/?', function ($request) {
-    echo (new \App\Controllers\MovieController)->index($request);
+    $r->addRoute('GET', '/', '\App\Controllers\MovieController@index');
+    $r->addRoute('GET', '/{id:\d+}', '\App\Controllers\MovieController@show');
+    $r->addRoute('GET', '/create', '\App\Controllers\MovieController@create');
+    $r->addRoute('POST', '/', '\App\Controllers\MovieController@store');
+    $r->addRoute('DELETE', '/{id:\d+}', '\App\Controllers\MovieController@delete');
+
+    $r->addRoute('GET', '/stars', '\App\Controllers\StarController@index');
+    $r->addRoute('GET', '/stars/typeahead', '\App\Controllers\StarController@typeahead');
+    $r->addRoute('POST', '/stars', '\App\Controllers\StarController@store');
+    $r->addRoute('DELETE', '/stars/{id:\d+}', '\App\Controllers\StarController@delete');
+
+    $r->addRoute('POST', '/import', '\App\Controllers\ImportController@importMovies');
+
 });
 
-$router->respond('GET', '/[i:id]', function ($request) {
-    echo (new \App\Controllers\MovieController)->show($request->id);
-});
+// Fetch method and URI from somewhere
+$httpMethod = $_SERVER['REQUEST_METHOD'];
+$uri = $_SERVER['REQUEST_URI'];
 
-$router->respond('GET', '/create', function () {
-    echo (new \App\Controllers\MovieController)->create();
-});
+if (isset($_POST['_method']) && $_POST['_method'] === 'DELETE') {
+    $httpMethod = 'DELETE';
+}
 
-$router->respond('POST', '/?', function ($request) {
-    echo (new \App\Controllers\MovieController)->store($request);
-});
+// Strip query string (?foo=bar) and decode URI
+if (false !== $pos = strpos($uri, '?')) {
+    $uri = substr($uri, 0, $pos);
+}
+$uri = rawurldecode($uri);
 
-$router->respond('DELETE', '/[i:id]', function ($request) {
-    echo (new \App\Controllers\MovieController)->delete($request->id);
-});
-
-$router->respond('GET', '/stars', function ($request) {
-    echo (new \App\Controllers\StarController())->index($request);
-});
-
-$router->respond('GET', '/stars/typeahead', function ($request) {
-    echo (new \App\Controllers\StarController())->typeahead($request);
-});
-
-$router->respond('POST', '/stars', function ($request) {
-    echo (new \App\Controllers\StarController())->store($request);
-});
-
-$router->respond('DELETE', '/stars/[i:id]', function ($request) {
-    echo (new \App\Controllers\StarController())->delete($request->id);
-});
-
-$router->respond('POST', '/import', function ($request) {
-    echo (new \App\Controllers\ImportController())->importMovies($request);
-});
-
-$router->dispatch();
-
+$routeInfo = $dispatcher->dispatch($httpMethod, $uri);
+switch ($routeInfo[0]) {
+    case FastRoute\Dispatcher::NOT_FOUND:
+        // ... 404 Not Found
+        break;
+    case FastRoute\Dispatcher::METHOD_NOT_ALLOWED:
+        $allowedMethods = $routeInfo[1];
+        // ... 405 Method Not Allowed
+        break;
+    case FastRoute\Dispatcher::FOUND:
+        $handler = $routeInfo[1];
+        $vars = $routeInfo[2];
+        list($class, $method) = explode("@", $handler, 2);
+        call_user_func_array(array(new $class, $method), $vars);
+        break;
+}

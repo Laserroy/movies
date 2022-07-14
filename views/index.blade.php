@@ -10,10 +10,15 @@
     <div class="row m-2">
         <div class="col-8 d-flex">
             <form class="d-flex" role="search" method="GET" action="/">
-                <input class="form-control" name="search" type="search" placeholder="Search" aria-label="Search">
+                <input class="form-control"
+                       name="search"
+                       value="{{$search ?? ''}}"
+                       type="search"
+                       placeholder="Search"
+                       aria-label="Search">
                 <select class="form-control  me-2" name="filter">
                     <option value="title">by title</option>
-                    <option value="star">by star</option>
+                    <option value="star" {{$filter === 'star' ? 'selected' : ''}}>by star</option>
                 </select>
                 <button class="btn btn-outline-success me-5" type="submit">Search</button>
             </form>
@@ -21,7 +26,11 @@
         <div class="col-4">
             <form action="/import" method="POST" enctype="multipart/form-data">
                 <div class="input-group">
-                    <input class="form-control d-inline-block" type="file" name="movies_import" accept=".txt">
+                    <input class="form-control d-inline-block"
+                           type="file"
+                           name="movies_import"
+                           accept=".txt"
+                           title="Only text files with template:&#010;Title: _&#010;Release Year: _&#010;Format: _&#010;Stars: _">
                     <button type="submit" class="btn btn-success d-inline-block">Upload</button>
                 </div>
             </form>
@@ -46,11 +55,11 @@
                     <td>{{$movie->release_year}}</td>
                     <td>{{$movie->format}}</td>
                     <td>
-                        <div class="btn-group">
-                            <a class="btn btn-warning m-1" href="/{{$movie->id}}">Show</a>
+                        <div class="d-flex flex-row">
+                            <a class="btn btn-warning mx-1 text-black" role="button" href="/{{$movie->id}}">Show</a>
                             <form action="/{{$movie->id}}" method="POST">
                                 <input type="hidden" name="_method" value="DELETE">
-                                <input class="btn btn-danger m-1" name="delete" type="submit" value="Delete">
+                                <button class="btn btn-danger text-black mx-1" name="delete" type="submit">Delete</button>
                             </form>
                         </div>
                     </td>
@@ -59,4 +68,10 @@
             </tbody>
         </table>
     </div>
+@endsection
+
+@section('script')
+    <script>
+
+    </script>
 @endsection

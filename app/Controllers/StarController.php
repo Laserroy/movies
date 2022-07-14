@@ -21,25 +21,23 @@ class StarController
         $this->db->query('SELECT * FROM stars ORDER BY full_name ASC');
         $stars = $this->db->resultset();
 
-        return $this->template->render('stars.index', compact('stars'));
+        echo $this->template->render('stars.index', compact('stars'));
     }
 
-    public function typeahead($request)
+    public function typeahead()
     {
-        $queryString = $request->paramsGet();
-        $search = $queryString['q'];
+        $search = $_GET['q'];
 
         $this->db->query('SELECT * FROM stars WHERE full_name LIKE :search');
         $this->db->bind(':search', "%$search%");
         $stars = $this->db->resultset();
 
-        return json_encode($stars);
+        echo json_encode($stars);
     }
 
-    public function store($request)
+    public function store()
     {
-        $form = $request->paramsPost();
-        $form = $request->paramsPost();
+        $form = $_POST;
 
         $this->db->query('INSERT IGNORE INTO stars (full_name) VALUES (:full_name)');
         $this->db->bind(':full_name', $form['full_name'], 2);

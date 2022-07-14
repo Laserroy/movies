@@ -16,17 +16,17 @@ class MovieController
         $this->template = new Blade('views', 'cache');
     }
 
-    public function index($request)
+    public function index()
     {
-        $searchParams = $request->paramsGet();
-        $search ??= $searchParams['search'];
-        $filter ??= $searchParams['filter'];
+        $search = $_GET['search'] ?? "";
+        $filter = $_GET['filter'] ?? "";
         $searchQuery = "";
 
         if ($search) {
+            $escapedSearch = addslashes($search);
             $searchQuery = $filter === 'star'
-                ? "WHERE stars.full_name LIKE '%$search%'"
-                : "WHERE title LIKE '%$search%'";
+                ? "WHERE stars.full_name LIKE '%$escapedSearch%'"
+                : "WHERE title LIKE '%$escapedSearch%'";
         }
 
         $this->db->query("SELECT movies.*, GROUP_CONCAT(stars.full_name SEPARATOR ', ') AS stars
@@ -39,7 +39,7 @@ class MovieController
 
         $movies = $this->db->resultset();
 
-        return $this->template->render('index', compact('movies'));
+        echo $this->template->render('index', compact(['movies', 'search', 'filter']));
     }
 
     public function show($id)
@@ -53,17 +53,17 @@ class MovieController
 
         $movie = $this->db->single();
 
-        return $this->template->render('show', compact('movie'));
+        echo $this->template->render('show', compact('movie'));
     }
 
     public function create()
     {
-        return $this->template->render('create');
+        echo $this->template->render('create');
     }
 
-    public function store($request)
+    public function store()
     {
-        $form = $request->paramsPost();
+        $form = $_POST;
 
         $this->db->query('INSERT INTO movies (title, release_year, format) VALUES (?, ?, ?)');
         $this->db->bind(1, $form['title']);

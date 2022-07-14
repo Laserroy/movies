@@ -9,11 +9,25 @@
             <div class="row">
                 <div class="col-6 mb-3">
                     <label for="titleInput" class="form-label">Title</label>
-                    <input type="text" name="title" class="form-control" id="titleInput" maxLength="80" required>
+                    <input type="text"
+                           name="title"
+                           pattern="^[^\s].*[^\s]$"
+                           title="Surrounding spaces are not allowed"
+                           class="form-control"
+                           id="titleInput"
+                           maxLength="80"
+                           required>
                 </div>
                 <div class="col-6 mb-3">
                     <label for="releaseYearInput" class="form-label">Release Year</label>
-                    <input type="number" name="release_year" class="form-control" id="releaseYearInput" max="9999" required>
+                    <input type="number"
+                           name="release_year"
+                           class="form-control"
+                           id="releaseYearInput"
+                           min="1850"
+                           max="2022"
+                           placeholder="1850 - 2022"
+                           required>
                 </div>
                 <div class="col-12 mb-3">
                     <label for="formatSelect" class="form-label">Format</label>

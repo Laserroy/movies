@@ -40,7 +40,7 @@
                         <div class="btn-group">
                             <form action="/stars/{{$star->id}}" method="POST">
                                 <input type="hidden" name="_method" value="DELETE">
-                                <input class="btn btn-danger m-1" name="delete" type="submit" value="Delete">
+                                <input class="btn btn-danger text-black m-1" name="delete" type="submit" value="Delete">
                             </form>
                         </div>
                     </td>
