@@ -43,8 +43,7 @@ class StarController
         $this->db->bind(':full_name', $form['full_name'], 2);
         $this->db->execute();
 
-        header("Location: /stars");
-        exit();
+        echo json_encode(['status' => 200, 'message' => $form['full_name'] . " successfully created"]);
     }
 
     public function delete($id)
@@ -53,7 +52,6 @@ class StarController
         $this->db->bind(':id', $id, 1);
         $this->db->execute();
 
-        header("Location: /stars");
-        exit();
+        echo json_encode(['status' => 200, 'message' => "successfully deleted"]);
     }
 }

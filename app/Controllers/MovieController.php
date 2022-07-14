@@ -82,8 +82,7 @@ class MovieController
             }
         }
 
-        header("Location: /");
-        exit();
+        echo json_encode(['status' => 200, 'message' => $form['title'] . " successfully created"]);
     }
 
     public function delete($id)
@@ -92,7 +91,6 @@ class MovieController
         $this->db->bind(':id', $id, 1);
         $this->db->execute();
 
-        header("Location: /");
-        exit();
+        echo json_encode(['status' => 200, 'message' => "successfully deleted"]);
     }
 }
