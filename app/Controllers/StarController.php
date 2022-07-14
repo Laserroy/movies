@@ -39,7 +39,16 @@ class StarController
     {
         $form = $_POST;
 
-        $this->db->query('INSERT IGNORE INTO stars (full_name) VALUES (:full_name)');
+        $this->db->query('SELECT id FROM stars WHERE full_name = :full_name');
+        $this->db->bind(':full_name', $form['full_name']);
+        $this->db->execute();
+
+        if ($this->db->rowCount()) {
+            echo json_encode(['status' => 422, 'message' => $form['full_name'] . " already exist"]);
+            exit(422);
+        }
+
+        $this->db->query('INSERT INTO stars (full_name) VALUES (:full_name)');
         $this->db->bind(':full_name', $form['full_name'], 2);
         $this->db->execute();
 

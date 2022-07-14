@@ -124,6 +124,14 @@
                             }).then(() => window.location.href="/stars")
                         }
 
+                        if (response.status === 422) {
+                            Swal.fire({
+                                title: response.message,
+                                icon: "info",
+                                confirmButtonText: "Ok",
+                            })
+                        }
+
                         if (response.status === 500) {
                             Swal.fire({
                                 title: response.message,

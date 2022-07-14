@@ -65,6 +65,15 @@ class MovieController
     {
         $form = $_POST;
 
+        $this->db->query('SELECT id FROM movies WHERE title = :title');
+        $this->db->bind(':title', $form['title']);
+        $this->db->execute();
+
+        if ($this->db->rowCount()) {
+            echo json_encode(['status' => 422, 'message' => $form['title'] . " already exist"]);
+            exit(422);
+        }
+
         $this->db->query('INSERT INTO movies (title, release_year, format) VALUES (?, ?, ?)');
         $this->db->bind(1, $form['title']);
         $this->db->bind(2, $form['release_year']);
